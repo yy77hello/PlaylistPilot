@@ -197,3 +197,39 @@ x86/
 !.vscode/tasks.json    # Optional: Keep shared tasks in version control.
 !.vscode/launch.json   # Optional: Keep shared launch configurations in version control.
 !.vscode/extensions.json # Optional: Keep shared extensions list in version control.
+
+# PyCharm-specific files
+.idea/
+workspace.xml  # User-specific workspace settings
+usage.statistics.xml  # User-specific usage data
+shelf/  # Local changes saved in IDE
+
+# Python virtual environment
+venv/
+.env  # Environment variables and API credentials
+
+# Build results
+build/
+dist/
+
+# Logs and temporary files
+*.log
+*.pyc
+__pycache__/
+
+# Test results and coverage reports
+.tox/
+.pytest_cache/
+.coverage
+coverage.xml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Documentation builds
+docs/_build/
+
+# Ignore secrets and sensitive information
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
