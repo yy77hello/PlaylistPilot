@@ -1,6 +1,6 @@
 # PlaylistPilot
 
-<img src="./logo.jpg" alt="Playlist Pilot logo" width="60%">
+<img src="./logo.jpg" alt="Playlist Pilot logo" width="80%">
 
 
 ## Abstract
