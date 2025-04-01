@@ -1,5 +1,7 @@
-
 # PlaylistPilot
+
+![Playlist Pilot logo](./logo.jpg)
+
 
 ## Abstract
 This project aims to develop a music recommendation system that allows users to create personalized playlists based on their song selections and the relationships between song tags. The system will utilize the Spotify and Last.fm APIs to retrieve music data and user input, organizing this information using tree and graph data structures. A recommendation algorithm will analyze tag relationships to suggest relevant tracks, offering users a dynamic and intuitive way to discover new music based on their existing preferences.
