@@ -175,3 +175,25 @@ cython_debug/
 
 # New
 .env # API Credentials
+
+# Visual Studio
+.vs/
+*.suo
+*.userosscache
+*.rsuser
+
+# Build results
+[Dd]ebug*/
+[Rr]elease*/
+x64/
+x86/
+
+# Auto-generated files
+*.nupkg
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json # Optional: Keep shared settings in version control.
+!.vscode/tasks.json    # Optional: Keep shared tasks in version control.
+!.vscode/launch.json   # Optional: Keep shared launch configurations in version control.
+!.vscode/extensions.json # Optional: Keep shared extensions list in version control.
