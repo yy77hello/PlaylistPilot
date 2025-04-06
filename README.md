@@ -1,6 +1,6 @@
 # PlaylistPilot
 
-<img src="./logo.jpg" alt="Playlist Pilot logo" width="80%">
+<img src="./logo.jpg" alt="Playlist Pilot logo" width="100%">
 
 
 ## Abstract
@@ -34,8 +34,11 @@ This project aims to develop a music recommendation system that allows users to 
 - **pylast:** For interacting with the Last.fm API. Install with:  
 
      pip3 install pylast
+	 
+- **spotipy:** For interacting with Spotify API. Install with: 
 
-  
+    pip3 install python-dotenv
+
 - **python-dotenv:** For loading environment variables from a .env file. Install with: 
 
     pip3 install python-dotenv
