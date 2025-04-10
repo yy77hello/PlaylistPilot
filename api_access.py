@@ -55,12 +55,12 @@ def get_full_song_data(track_name, artist_name):
     return None
 
 # For testing
-print("LastFM API information loaded from env")
-print(LASTFM_API_KEY)
-print(LASTFM_API_SECRET)
-print("Spotify API information loaded from env")
-print(SPOTIFY_CLIENT_ID)
-print(SPOTIFY_CLIENT_SECRET)
+# print("LastFM API information loaded from env")
+# print(LASTFM_API_KEY)
+# print(LASTFM_API_SECRET)
+# print("Spotify API information loaded from env")
+# print(SPOTIFY_CLIENT_ID)
+# print(SPOTIFY_CLIENT_SECRET)
 print("Redirect URL: ", SPOTIFY_REDIRECT_URI)
 
 # Creating a variable that stores our connection to last.fm
@@ -88,5 +88,14 @@ def get_track_tags(track):
         return tags
     return [] # Only goes here if no valid track
 
+def get_tag_tracks(tag):
+    if tag:
+        tracks = tag.get_top_tracks()
+        return tracks
+    return [] # Only goes here if no valid track
+
 print("Testing getting lastfm song data:", get_lastfm_track("Brian Eno", "Emerald and Stone"))
 print("Testing getting lastfm tag data:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone")))
+# print("Testing getting lastfm tracks per tag data:", get_tag_tracks(get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))))
+
+# help(pylast)
