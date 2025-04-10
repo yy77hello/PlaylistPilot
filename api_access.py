@@ -88,4 +88,5 @@ def get_track_tags(track):
         return tags
     return [] # Only goes here if no valid track
 
-print("Testing getting lastfm song data:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone")))
+print("Testing getting lastfm song data:", get_lastfm_track("Brian Eno", "Emerald and Stone"))
+print("Testing getting lastfm tag data:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone")))
