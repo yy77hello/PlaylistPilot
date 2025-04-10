@@ -97,5 +97,7 @@ def get_tag_tracks(tag):
 print("Testing getting lastfm song data:", get_lastfm_track("Brian Eno", "Emerald and Stone"))
 print("Testing getting lastfm tag data:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone")))
 # print("Testing getting lastfm tracks per tag data:", get_tag_tracks(get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))))
-
-# help(pylast)
+print("First tag:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))[0].item)
+for i in range(6):
+    print("Tag", i, ":", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))[i].item)
+# help(pylast.TopItem)
