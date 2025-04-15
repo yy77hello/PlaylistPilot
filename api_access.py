@@ -4,7 +4,9 @@ import pylast
 import spotipy
 # from spotipy.oauth2 import SpotifyOAuth # If using user authentication (for working with user data from spotify)
 
-load_dotenv()  # loads from .env into this dotenv
+# loads from .env into this dotenv
+if not load_dotenv():
+    print("Cant find the env file")
 
 LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
 LASTFM_API_SECRET = os.getenv("LASTFM_API_SECRET")
