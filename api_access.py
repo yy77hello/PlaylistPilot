@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 import os
 import pylast
 import spotipy
-# from spotipy.oauth2 import SpotifyOAuth # If using user authentication (for working with user data from spotify)
+from Playlist import Playlist
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials # If using user authentication (for working with user data from spotify)
 
 # loads from .env into this dotenv
 if not load_dotenv():
@@ -15,13 +16,17 @@ SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 SPOTIFY_REDIRECT_URI = "http://localhost:8080" # Can also use 127.0.0.1
 
 # Sp is an object holding spotify client locally
-sp = spotipy.Spotify() # No authentication client, still should be good for searching functionality that we need
+#sp = spotipy.Spotify() # No authentication client, still should be good for searching functionality that we need
 
 # We can use this if we want to use an authenticated spotify client, useful if we want to work with users data
 # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIFY_CLIENT_ID,
 #                                                client_secret=SPOTIFY_CLIENT_SECRET,
 #                                                redirect_uri=SPOTIFY_REDIRECT_URI,
 #                                                scope="user-library-read"))
+
+# Using SpotifyClientCredentials to prevent manually having to sign in via spotify web. All is done within here now.
+client_credentials_manager = SpotifyClientCredentials(client_id=SPOTIFY_CLIENT_ID, client_secret=SPOTIFY_CLIENT_SECRET)
+sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 def search_spotify_track(track_name, artist_name):
     # limit = 1 argument means that this will only return one song. Consider playing around with this value if we want to implement user choice between search options
@@ -96,10 +101,28 @@ def get_tag_tracks(tag):
         return tracks
     return [] # Only goes here if no valid track
 
-print("Testing getting lastfm song data:", get_lastfm_track("Brian Eno", "Emerald and Stone"))
-print("Testing getting lastfm tag data:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone")))
-# print("Testing getting lastfm tracks per tag data:", get_tag_tracks(get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))))
-print("First tag:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))[0].item)
-for i in range(6):
-    print("Tag", i, ":", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))[i].item)
+# print("Testing getting lastfm song data:", get_lastfm_track("Brian Eno", "Emerald and Stone"))
+# print("Testing getting lastfm tag data:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone")))
+# # print("Testing getting lastfm tracks per tag data:", get_tag_tracks(get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))))
+# print("First tag:", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))[0].item)
+# for i in range(6):
+#    print("Tag", i, ":", get_track_tags(get_lastfm_track("Brian Eno", "Emerald and Stone"))[i].item)
 # help(pylast.TopItem)
+
+print(get_full_song_data("Emerald and Stone", "Brian Eno"))
+
+my_playlist = Playlist("My Playlist")
+
+song1_info = get_full_song_data("Emerald and Stone", "Brian Eno")
+if song1_info:
+    my_playlist.add_song(song1_info)
+    print(f"Added to playlist: {song1_info['track_name']}")
+
+song2_info = get_full_song_data("Inspirit", "Julianna Barwic") # Misspelled on purpose to see that it recognized it to "Julianna Barwick"
+if song2_info:
+    my_playlist.add_song(song2_info)
+    print(f"Added to playlist: {song2_info['track_name']}")
+
+print("\nSongs in my playlist:")
+for song in my_playlist.get_songs():
+    print(song['track_name'], "-", song['artist'])
