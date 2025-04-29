@@ -10,10 +10,11 @@ class TrackGraph:
 
     def add_edge(self, node1, node2, relationship):
         """
-        Add a relationship (edge) between two nodes.
-        - node1: The starting node (like a song)
-        - node2: The connected node (like a tag or artist)
-        - relationship: Type of relationship (like "is a tag of", "is by artist")
+        Add a relationship (edge) between two nodes, creating a two-way link
+        for common relationships like 'has_tag'/'is_tag_of' and 'is_by_artist'/'has_track'.
+        - node1: The starting node.
+        - node2: The connected node.
+        - relationship: The type of relationship.
         """
         self.add_node(node1)
         self.add_node(node2)
@@ -21,9 +22,30 @@ class TrackGraph:
         # Create relationship if we dont have it yet
         if relationship not in self.graph[node1]:
             self.graph[node1][relationship] = set()
-
-        # Add node2 to the set of connected nodes for node1 with this relationship
         self.graph[node1][relationship].add(node2)
+
+        # Add the reverse connection from node2 to node1 directly
+        # We wanna have the relationship go the other way too because otherwise the tagging isnt gonna work when we run algorithms
+        if relationship == "has_tag":
+            reverse_relationship = "is_tag_of"
+            if reverse_relationship not in self.graph[node2]: # so we don't add a duplicate
+                self.graph[node2][reverse_relationship] = set()
+            self.graph[node2][reverse_relationship].add(node1)
+        elif relationship == "is_tag_of":
+            reverse_relationship = "has_tag"
+            if reverse_relationship not in self.graph[node2]: # so we don't add a duplicate
+                self.graph[node2][reverse_relationship] = set()
+            self.graph[node2][reverse_relationship].add(node1)
+        elif relationship == "is_by_artist":
+            reverse_relationship = "has_track"
+            if reverse_relationship not in self.graph[node2]: # so we don't add a duplicate
+                self.graph[node2][reverse_relationship] = set()
+            self.graph[node2][reverse_relationship].add(node1)
+        elif relationship == "has_track":
+            reverse_relationship = "is_by_artist"
+            if reverse_relationship not in self.graph[node2]: # so we don't add a duplicate
+                self.graph[node2][reverse_relationship] = set()
+            self.graph[node2][reverse_relationship].add(node1)
 
 
     def get_connected_nodes(self, node, relationship):
@@ -59,30 +81,3 @@ class TrackGraph:
             # If the node doesn't exist in the graph we just return an empty list
             return []
 
-
-# Testing
-track_graph = TrackGraph()
-
-# Add nodes (songs, tags, artists)
-track_graph.add_node("Emerald and Stone")
-track_graph.add_node("ambient")
-track_graph.add_node("Brian Eno")
-
-# Add relationships (edges)
-track_graph.add_edge("ambient", "Emerald and Stone", "is a tag of")
-track_graph.add_edge("Emerald and Stone", "Brian Eno", "is by artist")
-
-# Accessing connected nodes:
-# Get all songs tagged with 'ambient'
-connected_songs = track_graph.get_connected_nodes("ambient", "is a tag of")
-print(connected_songs)  # Output: {'song: Emerald and Stone'}
-
-# Get all artists of the song 'Emerald and Stone'
-connected_artists = track_graph.get_connected_nodes("Emerald and Stone", "is by artist")
-print(connected_artists)  # Output: {'Brian Eno'}
-
-# Get all relationships of a song
-relationships = track_graph.get_all_relationships("Emerald and Stone")
-for relationship, nodes in relationships:
-    print(f"Relationship: {relationship}")
-    print(f"Connected Nodes: {nodes}")
