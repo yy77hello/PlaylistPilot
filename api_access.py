@@ -4,9 +4,9 @@ import pylast
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials # If using user authentication (for working with user data from spotify)
 
-# loads from .env into this dotenv
+# loads from ..env into this dotenv
 if not load_dotenv():
-    print("Cant find the env file")
+    print("Cant find the .env file")
 
 LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
 LASTFM_API_SECRET = os.getenv("LASTFM_API_SECRET")
@@ -60,11 +60,18 @@ def get_full_song_data(track_name, artist_name):
             return spotify_data  # Return Spotify data even if Last.fm doesn't have it
     return None
 
+def get_playlist_id_from_link(playlist_link):
+    return playlist_link.split("/")[-1].split("?")[0]
+
+def get_song_from_link(song_link):
+    song_id = song_link.split("/")[-1].split("?")[0]
+    return sp.track(song_id)
+
 # For testing
-# print("LastFM API information loaded from env")
+# print("LastFM API information loaded from .env")
 # print(LASTFM_API_KEY)
 # print(LASTFM_API_SECRET)
-# print("Spotify API information loaded from env")
+# print("Spotify API information loaded from .env")
 # print(SPOTIFY_CLIENT_ID)
 # print(SPOTIFY_CLIENT_SECRET)
 print("Redirect URL: ", SPOTIFY_REDIRECT_URI)
@@ -93,9 +100,23 @@ def get_track_tags(track):
         tags = track.get_top_tags()
         return tags
     return [] # Only goes here if no valid track
-
-def get_tag_tracks(tag):
+'''
+Gets top tracks for a tag on Last.fm.
+Inputs: Last.FM tag, Number of songs to return
+Returns: A list of Track objects
+'''
+def get_tag_top_tracks(tag, limit=10):
     if tag:
-        tracks = tag.get_top_tracks()
+        tracks = tag.get_top_tracks(limit=limit)
+        return tracks
+    return [] # Only goes here if no valid track
+
+'''
+Gets 5 tracks that are similar to input track
+Inputs: 
+'''
+def get_similar_tracks(track):
+    if track:
+        tracks = track.get_similar(5)
         return tracks
     return [] # Only goes here if no valid track
