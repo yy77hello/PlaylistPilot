@@ -67,19 +67,22 @@ def main_screen():
     nav_frame = tk.Frame(window)
     nav_frame.pack(side='bottom', fill='x', pady=10)
 
+    # Button to close program
     button_done = tk.Button(nav_frame, text='Done', command=window.destroy)
     button_done.pack(side='right', padx=20)
 
+    # Logo
     label_logo = tk.Label(window, image=resized_logo_subsample)
     label_logo.pack(side='top')
 
+    # Title
     label_title = tk.Label(window, text='Playlist Pilot', font=font.Font(size=22))
     label_title.pack()
 
+    # Option Selector
     selected_option = tk.StringVar()
     options = ['Input Song', 'Input Playlist','Recommendations']
     selected_option.set("Choose Option")
-
     def update_screen():
         if selected_option.get() == 'Input Song':
             show_screen_song()
@@ -87,12 +90,12 @@ def main_screen():
             show_screen_playlist()
         elif selected_option.get() == 'Recommendations':
             show_screen_recommended()
-
     option_menu = tk.OptionMenu(window, selected_option, *options, command=lambda _: update_screen())
     option_menu.config(width=15)
     option_menu.pack(pady=10)
     update_screen()
 
+    # Playlist output
     listbox_playlist = tk.Listbox(window)
     clear_button = tk.Button(window, text='Clear Playlist', command=lambda: clear_playlist(listbox_playlist))
     clear_button.pack(pady=(0, 20))
@@ -113,7 +116,7 @@ def main_screen():
     # Clear Listbox
     listbox_playlist.delete(0, tk.END)
 
-    # Header
+    # Listbox Header
     header = f"{'Index':<6} {'Artist':<25} {'Track':<35}"
     listbox_playlist.insert(tk.END, header)
     listbox_playlist.insert(tk.END, "-" * len(header))
@@ -135,15 +138,19 @@ def show_screen_recommended():
     nav_frame = tk.Frame(window)
     nav_frame.pack(side='bottom', fill='x', pady=10)
 
+    # Button to return to main screen
     button_back = tk.Button(nav_frame, text='Back', command=main_screen)
     button_back.pack(side='left', padx=20)
 
+    # Button to close program
     button_done = tk.Button(nav_frame, text='Done', command=window.destroy)
     button_done.pack(side='right', padx=20)
 
+    # Logo
     label_logo = tk.Label(window, image=resized_logo_subsample)
     label_logo.pack(side='top')
 
+    # Title
     label_title = tk.Label(window, text='Playlist Pilot', font=font.Font(size=22))
     label_title.pack(side='top')
 
@@ -168,7 +175,7 @@ def show_screen_recommended():
     # Clear listbox before inserting new items
     listbox_recommended.delete(0, tk.END)
 
-    # Header
+    # Listbox Header
     header = f"{'Index':<6} {'Artist':<25} {'Track':<35} {'Tag':<15}"
     listbox_recommended.insert(tk.END, header)
     listbox_recommended.insert(tk.END, "-" * len(header))
@@ -182,6 +189,7 @@ def show_screen_recommended():
         formatted = f"{index:<6} {artist:<25} {title:<35} {tag:<15}"
         listbox_recommended.insert(tk.END, formatted)
 
+    # Forces window to load properly, as it appears like its invisible initially
     listbox_recommended.focus_force()
 
 def show_screen_song():
@@ -191,21 +199,27 @@ def show_screen_song():
     nav_frame = tk.Frame(window)
     nav_frame.pack(side='bottom', fill='x', pady=10)
 
+    # Button to return to main screen
     button_back = tk.Button(nav_frame, text='Back', command=main_screen)
     button_back.pack(side='left', padx=20)
 
+    # Button to close program
     button_done = tk.Button(nav_frame, text='Done', command=window.destroy)
     button_done.pack(side='right', padx=20)
 
+    # Logo
     label_logo = tk.Label(window, image=resized_logo_subsample)
     label_logo.pack(side='top')
 
+    # Title
     label_title = tk.Label(window, text='Playlist Pilot', font=font.Font(size=22))
     label_title.pack(side='top')
 
+    # Song title prompt
     label_song_prompt = tk.Label(window, text='Enter Song:')
     label_song_prompt.pack()
 
+    # Song title user input
     entry_song_title = tk.Entry(window,
                                 bg='white',
                                 fg='black',
@@ -216,12 +230,13 @@ def show_screen_song():
                                 highlightbackground='gray',
                                 highlightcolor='blue',
                                 insertbackground='black')
-
     entry_song_title.pack(padx=10, ipady=2)
 
+    # Song artist prompt
     label_artist_prompt = tk.Label(window, text='Enter Artist:')
     label_artist_prompt.pack()
 
+    # Song artist user input
     entry_artist = tk.Entry(window,
                             bg='white',
                             fg='black',
@@ -255,7 +270,7 @@ def show_screen_song():
     # Clear Listbox
     listbox_playlist.delete(0, tk.END)
 
-    # Header
+    # Listbox Header
     header = f"{'Index':<6} {'Artist':<25} {'Track':<35}"
     listbox_playlist.insert(tk.END, header)
     listbox_playlist.insert(tk.END, "-" * len(header))
@@ -267,19 +282,23 @@ def show_screen_song():
         formatted = f"{index:<6} {artist:<25} {track:<35}"
         listbox_playlist.insert(tk.END, formatted)
 
+    # Forces window to load properly, as it appears like its invisible initially
     entry_song_title.focus_force()
 
 # Show Playlist Adding Screen
 def show_screen_playlist():
+    # Reset window
     clear_screen()
 
     # Bottom frame for navigation buttons
     nav_frame = tk.Frame(window)
     nav_frame.pack(side='bottom', fill='x', pady=10)
 
+    # Button to return to main screen
     button_back = tk.Button(nav_frame, text='Back', command=main_screen)
     button_back.pack(side='left', padx=20)
 
+    # Button to close program
     button_done = tk.Button(nav_frame, text='Done', command=window.destroy)
     button_done.pack(side='right', padx=20)
 
@@ -295,7 +314,7 @@ def show_screen_playlist():
     label_playlist_prompt = tk.Label(window, text='Enter Spotify Playlist Link:')
     label_playlist_prompt.pack()
 
-    # Playlist Entry
+    # Playlist Link User Input
     entry_playlist = tk.Entry(window,
                               bg='white',
                               fg='black',
@@ -320,7 +339,7 @@ def show_screen_playlist():
     scrollbar_playlist = tk.Scrollbar(frame_playlist, orient='vertical')
     scrollbar_playlist.pack(side='right', fill='y')
 
-    # Listbox
+    # Playlist Output Listbox
     listbox_playlist = tk.Listbox(frame_playlist, bg='white', fg='black', yscrollcommand=scrollbar_playlist.set, font=("Courier", 16))
     listbox_playlist.pack(side='left', fill='both', expand=True)
     scrollbar_playlist.config(command=listbox_playlist.yview)
@@ -328,7 +347,7 @@ def show_screen_playlist():
     # Clear Listbox
     listbox_playlist.delete(0, tk.END)
 
-    # Header
+    # Listbox Header
     header = f"{'Index':<6} {'Artist':<25} {'Track':<35}"
     listbox_playlist.insert(tk.END, header)
     listbox_playlist.insert(tk.END, "-" * len(header))
@@ -340,14 +359,20 @@ def show_screen_playlist():
         formatted = f"{index:<6} {artist:<25} {track:<35}"
         listbox_playlist.insert(tk.END, formatted)
 
-    # Force Focus
+    # Forces window to load properly, as it appears like its invisible initially
     entry_playlist.focus_force()
 
+# Removes all objects from screen, in other words resets the window
 def clear_screen():
-    # Removes all objects from screen
     for widget in window.winfo_children():
         widget.destroy()
 
+'''
+Function for when submit is pressed on the playlist screen
+Takes user entered list, retrieves it from spotify,
+enters the playlist songs into the playlist graph
+and prints it to the listbox
+'''
 def submit_link(entry_playlist, listbox):
     # Get input link
     input_playlist_link = entry_playlist.get()
@@ -364,7 +389,7 @@ def submit_link(entry_playlist, listbox):
     # Clear Listbox
     listbox.delete(0, tk.END)
 
-    # Header
+    # Listbox Header
     header = f"{'Index':<6} {'Artist':<25} {'Track':<35}"
     listbox.insert(tk.END, header)
     listbox.insert(tk.END, "-" * len(header))
@@ -377,7 +402,12 @@ def submit_link(entry_playlist, listbox):
         listbox.insert(tk.END, formatted)
 
 
-
+'''
+Function for when submit is pressed on the song screen:
+Takes user input song title and artist, retrieves it from spotify,
+enters the song into the playlist graph
+and prints it to the listbox
+'''
 def submit_song(entry_artist, entry_song, listbox):
     # Get song info from inputs and insert into the playlist graph
     artist = entry_artist.get()
@@ -388,12 +418,13 @@ def submit_song(entry_artist, entry_song, listbox):
     if not song_info:
         return
 
+    # If found, add song to playlist graph
     my_playlist.add_song(song_info)
 
     # Clear Listbox
     listbox.delete(0, tk.END)
 
-    # Header
+    # Listbox Header
     header = f"{'Index':<6} {'Artist':<25} {'Track':<35}"
     listbox.insert(tk.END, header)
     listbox.insert(tk.END, "-" * len(header))
@@ -406,6 +437,7 @@ def submit_song(entry_artist, entry_song, listbox):
         listbox.insert(tk.END, formatted)
 
 def clear_playlist(listbox):
+    # Overwrite my_playlist with a new Playlist object
     global my_playlist
     my_playlist = Playlist('My Playlist')
     print("Playlist cleared.")
@@ -413,7 +445,7 @@ def clear_playlist(listbox):
     # Clear Listbox
     listbox.delete(0, tk.END)
 
-    # Header
+    # Listbox Header
     header = f"{'Index':<6} {'Artist':<25} {'Track':<35}"
     listbox.insert(tk.END, header)
     listbox.insert(tk.END, "-" * len(header))
@@ -432,6 +464,6 @@ if __name__ == '__main__':
     start_button = tk.Button(window, text='Start', command=lambda: main_screen(), height=3, width=10, font=("Arial", 22))
     start_button.pack(pady=10)
 
-    # Start the main event loop
+    # Start the main event loop and focuses window.
     window.focus_force()
     window.mainloop()
